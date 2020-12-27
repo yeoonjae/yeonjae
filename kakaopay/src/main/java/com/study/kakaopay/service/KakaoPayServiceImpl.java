@@ -1,12 +1,11 @@
-package com.study.kakaopay;
+package com.study.kakaopay.service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.UUID;
 
-import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -14,24 +13,11 @@ import org.springframework.web.client.RestTemplate;
 import com.study.kakaopay.vo.KakaopayStartResponseVO;
 import com.study.kakaopay.vo.KakaopayStartVO;
 
-import lombok.extern.slf4j.Slf4j;
+@Service
+public class KakaoPayServiceImpl implements KakaoPayService{
 
-@Slf4j
-public class Test01 {
-
-	@Test
-	public void test() throws URISyntaxException {
-		//필요데이터를 변수 선언
-		KakaopayStartVO startVO = KakaopayStartVO.builder()
-							.partner_order_id(UUID.randomUUID().toString())
-							.partner_user_id("cba")
-							.item_name("아이패드 프로 4세대")
-							.quantity(4)
-							.total_amount(120000)
-							.build();
-		
-		log.info("start");
-		
+	@Override
+	public KakaopayStartResponseVO kakaopay(KakaopayStartVO startVO) throws URISyntaxException {
 		//도구생성
 		RestTemplate template = new RestTemplate();
 		
@@ -61,8 +47,7 @@ public class Test01 {
 		
 		//template을 이용하여 요청을 전송
 		KakaopayStartResponseVO responseVO = template.postForObject(uri, entity, KakaopayStartResponseVO.class);
-		log.info("responseVO = {}",responseVO);
-		
-		log.info("finish");
+		return responseVO;
 	}
+
 }
