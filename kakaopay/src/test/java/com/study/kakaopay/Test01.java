@@ -2,8 +2,6 @@ package com.study.kakaopay;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +23,7 @@ public class Test01 {
 		
 		//Header생성
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "KakaoAK e50a7f6a4d11bdb17860ebea078db261");
+		headers.add("Authorization", "KakaoAK admin_key");
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
 		//Body생성
@@ -37,9 +35,9 @@ public class Test01 {
 		body.add("quantity", "1");
 		body.add("total_amount", "1280");
 		body.add("tax_free_amount", "0");
-		body.add("approval_url", "https://localhost:8080/kakaopay/pay/success");
-		body.add("cancel_url", "https://localhost:8080/kakaopay/pay/cancle");
-		body.add("fail_url", "https://localhost:8080/kakaopay/pay/fail");
+		body.add("approval_url", "http://localhost:8080/kakaopay/pay/success");
+		body.add("cancel_url", "http://localhost:8080/kakaopay/pay/cancle");
+		body.add("fail_url", "http://localhost:8080/kakaopay/pay/fail");
 		
 		//Header와 Body합치기
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body,headers);
@@ -49,7 +47,6 @@ public class Test01 {
 		
 		//template을 이용하여 요청을 전송
 		template.postForLocation(uri, entity);
-		
 		
 		log.info("finish");
 	}
