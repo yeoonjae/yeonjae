@@ -1,6 +1,7 @@
 package com.study.kakaopay.controller;
 
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ public class KakaopayController {
 	
 	@PostMapping("/prepare")
 	public String prepare(@ModelAttribute KakaopayStartVO startVO) throws URISyntaxException {
+		startVO.setPartner_order_id(UUID.randomUUID().toString());
+		startVO.setPartner_user_id("aaaaaa");
 		KakaopayStartResponseVO responseVO = service.kakaopay(startVO);
 		return "redirect:"+responseVO.getNext_redirect_pc_url();
 	}
